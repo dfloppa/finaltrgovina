@@ -64,3 +64,101 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+# E-Commerce Project - Final Trgovina
+
+This is a Laravel-based e-commerce application with Stripe integration for payments.
+
+## Project Setup Instructions
+
+### Prerequisites
+- PHP 8.1 or higher
+- Composer
+- Node.js and NPM
+- MySQL
+- XAMPP (or similar local development environment)
+
+### Installation Steps
+
+1. **Clone the repository**
+   ```
+   git clone https://github.com/yourusername/finaltrgovina.git
+   cd finaltrgovina
+   ```
+
+2. **Install PHP dependencies**
+   ```
+   composer install
+   ```
+
+3. **Install JavaScript dependencies**
+   ```
+   npm install
+   ```
+
+4. **Environment Setup**
+   - Copy the `.env.example` file to `.env`
+   - Update the database configuration in `.env` to match your local setup:
+     ```
+     DB_CONNECTION=mysql
+     DB_HOST=127.0.0.1
+     DB_PORT=3306
+     DB_DATABASE=finaltrgovina
+     DB_USERNAME=root
+     DB_PASSWORD=
+     ```
+
+5. **Generate application key**
+   ```
+   php artisan key:generate
+   ```
+
+6. **Run database migrations**
+   ```
+   php artisan migrate
+   ```
+
+7. **Seed the database (optional)**
+   ```
+   php artisan db:seed
+   ```
+
+8. **Build assets**
+   ```
+   npm run dev
+   ```
+
+9. **Start the development server**
+   ```
+   php artisan serve
+   ```
+   
+   Note for PowerShell users: Use `;` instead of `&&` for command chaining:
+   ```
+   cd C:\xampp\htdocs\finaltrgovina; php artisan serve
+   ```
+
+10. **Access the application**
+    - Visit `http://localhost:8000` in your browser
+
+## Transferring to Another Computer
+
+To transfer this project to another computer:
+
+1. Copy the entire project folder to a USB drive or other storage medium
+2. Install XAMPP on the target computer if not already installed
+3. Copy the project folder to the `htdocs` directory in the XAMPP installation
+4. Create a database named `finaltrgovina` in MySQL
+5. Follow steps 2-9 from the Installation Steps above
+
+## Features
+
+- Product catalog with categories
+- Shopping cart functionality
+- User authentication
+- Checkout process with Stripe integration
+- Order management
+
+## License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
