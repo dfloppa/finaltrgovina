@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use App\Models\PaymentMethod;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class PaymentMethodSeeder extends Seeder
 {
@@ -13,8 +15,14 @@ class PaymentMethodSeeder extends Seeder
      */
     public function run(): void
     {
-        // Clear existing payment methods
-        PaymentMethod::truncate();
+        // Check if payment methods already exist
+        if (PaymentMethod::count() > 0) {
+            $this->command->info('Payment methods already exist. Skipping...');
+            return;
+        }
+        
+        // Temporarily disable foreign key constraints
+        Schema::disableForeignKeyConstraints();
         
         // Create payment methods
         PaymentMethod::create([
@@ -52,5 +60,8 @@ class PaymentMethodSeeder extends Seeder
             'is_active' => true,
             'sort_order' => 4,
         ]);
+        
+        // Re-enable foreign key constraints
+        Schema::enableForeignKeyConstraints();
     }
 }

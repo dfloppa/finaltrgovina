@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Schema;
 
 class ComputerComponentsSeeder extends Seeder
 {
@@ -14,68 +15,92 @@ class ComputerComponentsSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create main Computer Components category
-        $mainCategory = Category::create([
-            'name' => 'Computer Components',
-            'slug' => 'computer-components',
-            'description' => 'Hardware components for building and upgrading computers',
-            'is_active' => true,
-        ]);
+        // Check if categories already exist
+        if (Category::where('slug', 'computer-components')->exists()) {
+            $this->command->info('Computer components category already exists. Skipping category creation...');
+            $mainCategory = Category::where('slug', 'computer-components')->first();
+        } else {
+            // Create main Computer Components category
+            $mainCategory = Category::create([
+                'name' => 'Computer Components',
+                'slug' => 'computer-components',
+                'description' => 'Hardware components for building and upgrading computers',
+                'is_active' => true,
+            ]);
+        }
 
-        // Create subcategories
-        $cpuCategory = Category::create([
-            'name' => 'Processors (CPU)',
-            'slug' => 'processors-cpu',
-            'description' => 'Central Processing Units from leading manufacturers',
-            'parent_id' => $mainCategory->id,
-            'is_active' => true,
-        ]);
+        // Create subcategories if they don't exist
+        if (!Category::where('slug', 'processors-cpu')->exists()) {
+            $cpuCategory = Category::create([
+                'name' => 'Processors (CPU)',
+                'slug' => 'processors-cpu',
+                'description' => 'Central Processing Units from leading manufacturers',
+                'parent_id' => $mainCategory->id,
+                'is_active' => true,
+            ]);
+        } else {
+            $cpuCategory = Category::where('slug', 'processors-cpu')->first();
+        }
 
-        $ramCategory = Category::create([
-            'name' => 'Memory (RAM)',
-            'slug' => 'memory-ram',
-            'description' => 'Random Access Memory modules for system performance',
-            'parent_id' => $mainCategory->id,
-            'is_active' => true,
-        ]);
+        if (!Category::where('slug', 'memory-ram')->exists()) {
+            $ramCategory = Category::create([
+                'name' => 'Memory (RAM)',
+                'slug' => 'memory-ram',
+                'description' => 'Random Access Memory modules for system memory',
+                'parent_id' => $mainCategory->id,
+                'is_active' => true,
+            ]);
+        } else {
+            $ramCategory = Category::where('slug', 'memory-ram')->first();
+        }
 
-        $gpuCategory = Category::create([
-            'name' => 'Graphics Cards (GPU)',
-            'slug' => 'graphics-cards-gpu',
-            'description' => 'Graphics Processing Units for gaming and professional use',
-            'parent_id' => $mainCategory->id,
-            'is_active' => true,
-        ]);
+        if (!Category::where('slug', 'graphics-cards')->exists()) {
+            $gpuCategory = Category::create([
+                'name' => 'Graphics Cards',
+                'slug' => 'graphics-cards',
+                'description' => 'Video cards for gaming and professional graphics work',
+                'parent_id' => $mainCategory->id,
+                'is_active' => true,
+            ]);
+        } else {
+            $gpuCategory = Category::where('slug', 'graphics-cards')->first();
+        }
 
-        $storageCategory = Category::create([
-            'name' => 'Storage',
-            'slug' => 'storage',
-            'description' => 'SSDs, HDDs, and other storage solutions',
-            'parent_id' => $mainCategory->id,
-            'is_active' => true,
-        ]);
+        if (!Category::where('slug', 'storage')->exists()) {
+            $storageCategory = Category::create([
+                'name' => 'Storage',
+                'slug' => 'storage',
+                'description' => 'Hard drives, SSDs, and other storage solutions',
+                'parent_id' => $mainCategory->id,
+                'is_active' => true,
+            ]);
+        } else {
+            $storageCategory = Category::where('slug', 'storage')->first();
+        }
 
-        $motherboardCategory = Category::create([
-            'name' => 'Motherboards',
-            'slug' => 'motherboards',
-            'description' => 'Motherboards for various CPU sockets and form factors',
-            'parent_id' => $mainCategory->id,
-            'is_active' => true,
-        ]);
+        if (!Category::where('slug', 'motherboards')->exists()) {
+            $motherboardCategory = Category::create([
+                'name' => 'Motherboards',
+                'slug' => 'motherboards',
+                'description' => 'Motherboards for various CPU sockets and form factors',
+                'parent_id' => $mainCategory->id,
+                'is_active' => true,
+            ]);
+        } else {
+            $motherboardCategory = Category::where('slug', 'motherboards')->first();
+        }
 
-        // Add CPU products
+        // Check if products already exist
+        if (Product::count() > 0) {
+            $this->command->info('Products already exist. Skipping product creation...');
+            return;
+        }
+
+        // Create products for each category
         $this->createCPUProducts($cpuCategory);
-        
-        // Add RAM products
         $this->createRAMProducts($ramCategory);
-        
-        // Add GPU products
         $this->createGPUProducts($gpuCategory);
-        
-        // Add Storage products
         $this->createStorageProducts($storageCategory);
-        
-        // Add Motherboard products
         $this->createMotherboardProducts($motherboardCategory);
     }
 

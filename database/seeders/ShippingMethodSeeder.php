@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\ShippingMethod;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class ShippingMethodSeeder extends Seeder
 {
@@ -13,8 +14,14 @@ class ShippingMethodSeeder extends Seeder
      */
     public function run(): void
     {
-        // Clear existing shipping methods
-        ShippingMethod::truncate();
+        // Check if shipping methods already exist
+        if (ShippingMethod::count() > 0) {
+            $this->command->info('Shipping methods already exist. Skipping...');
+            return;
+        }
+        
+        // Temporarily disable foreign key constraints
+        Schema::disableForeignKeyConstraints();
         
         // Create shipping methods
         ShippingMethod::create([
@@ -56,5 +63,8 @@ class ShippingMethodSeeder extends Seeder
             'is_active' => true,
             'sort_order' => 4,
         ]);
+        
+        // Re-enable foreign key constraints
+        Schema::enableForeignKeyConstraints();
     }
 }
