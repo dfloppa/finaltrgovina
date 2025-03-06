@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Override default blue colors with our primary teal color */
+@layer base {
+    [type='text']:focus,
+    input:where(:not([type])):focus,
+    [type='email']:focus,
+    [type='url']:focus,
+    [type='password']:focus,
+    [type='number']:focus,
+    [type='date']:focus,
+    [type='datetime-local']:focus,
+    [type='month']:focus,
+    [type='search']:focus,
+    [type='tel']:focus,
+    [type='time']:focus,
+    [type='week']:focus,
+    [multiple]:focus,
+    textarea:focus,
+    select:focus {
+        --tw-ring-color: #0ABAB5;
+        border-color: #0ABAB5;
+    }
+
+    [type='checkbox'],
+    [type='radio'],
+    .form-checkbox,
+    .form-radio {
+        color: #0ABAB5;
+    }
+
+    [type='checkbox']:focus,
+    [type='radio']:focus,
+    .form-checkbox:focus,
+    .form-radio:focus {
+        --tw-ring-color: #0ABAB5;
+    }
+}
+
+/* Cart Sidebar Animations */
+@layer components {
+    .cart-slide-in {
+        animation: slide-in 0.3s forwards;
+    }
+    
+    .cart-slide-out {
+        animation: slide-out 0.3s forwards;
+    }
+    
+    @keyframes slide-in {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(0); }
+    }
+    
+    @keyframes slide-out {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(100%); }
+    }
+    
+    /* Add a subtle bounce effect for added items */
+    .cart-item-added {
+        animation: item-added 0.5s ease-in-out;
+    }
+    
+    @keyframes item-added {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+}
