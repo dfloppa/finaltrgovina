@@ -82,7 +82,7 @@ This is a Laravel-based e-commerce application with Stripe integration for payme
 
 1. **Clone the repository**
    ```
-   git clone https://github.com/yourusername/finaltrgovina.git
+   git clone https://github.com/dfloppa/finaltrgovina.git
    cd finaltrgovina
    ```
 
